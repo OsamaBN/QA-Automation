@@ -1,0 +1,63 @@
+package A1;
+import java.util.Scanner;
+import java.util.Random;
+public class Assignment01 {
+
+	
+	public static void Q1()
+	{
+		Scanner obj = new Scanner (System.in);
+		System.out.println("Enter any number");
+		int number  = Integer.parseInt(obj.nextLine());
+		System.out.println("Enter your age");
+		int Age = Integer.parseInt(obj.nextLine());
+		
+		
+		int rnumber = (((Age-10)-1)*10)-(number*2);
+		
+		if (number > rnumber )
+		{
+			System.out.println("The Number is Large");
+		}
+		
+		else if (number < rnumber)
+		{
+			System.out.println("The Number is Small");
+		}
+		
+		else if (number == rnumber)
+		{
+			System.out.println("Nice Guess");
+		}
+		
+		else
+		{
+			
+		}
+		
+		System.out.println("The Number was " + rnumber);
+	}
+	
+	public static void Q2()
+	{
+		Scanner obj = new Scanner(System.in);
+		System.out.println("Enter Your full name");
+		String name = obj.nextLine();
+		
+		String[] updated_name = name.split(" ");
+		
+		char[] f = updated_name[0].toCharArray();
+		char[] m = updated_name[1].toCharArray();
+		
+		System.out.println(f[0]+"."+ m[0] +"."+ updated_name[2]);
+	
+	}
+	
+	public static void main(String[] args) {
+	
+		//Q1();
+		//Q2();
+		
+	}
+
+}
