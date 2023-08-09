@@ -1,0 +1,82 @@
+package notDefaultPackage;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+import java.util.List;
+import java.text.ParseException;
+
+public class Web {
+
+	static WebDriver driver;
+
+	public static void main(String[] args) {
+		
+		WebDriverManager.chromedriver().setup();
+		
+		
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--remote-allow-origins=*");
+		driver = new ChromeDriver(options);
+		
+		driver.get("https://omayo.blogspot.com/");
+		
+		String url = driver.getCurrentUrl();
+		String title = driver.getTitle();
+		
+		System.out.println("The url is : " + url);
+		System.out.println("The Title is : " + title);
+
+   
+		if (url.equals("https://omayo.blogspot.com/"))
+		{
+			System.out.println("URL: Passed");
+		}
+		else
+		{
+			System.out.println("URL: Failed");
+		}
+		
+		// Typing the name 
+		WebElement name = driver.findElement(By.id("ta1"));
+		name.sendKeys("Osama Bin Nadeem");
+		System.out.println("Name : Passed\n");
+		
+		
+		//Getting the data 
+		WebElement text = driver.findElement(By.xpath("//div[@class='widget-content']/textarea/following::textarea"));
+		String text1 = text.getAttribute("value");
+		System.out.println(text1);
+		System.out.println("Data Retreived : Passed\n");
+		
+		//Deleting the data 
+		text.clear();
+		System.out.println("Data Deleted from Field 2\n");
+		
+		//Enter text into Field 2 
+		text.sendKeys("I am speed :) ");
+		
+		//Get Table 
+		String table = driver.findElement(By.id("table1")).getText();
+		System.out.println(table);
+		
+		//Type username and password 
+		WebElement username = driver.findElement(By.xpath("//div[@class='widget-content']/form/input[1]"));
+		username.sendKeys("OsamaBinNadeem");
+		System.out.println("User Name : Passed");
+		
+		WebElement password = driver.findElement(By.xpath("//div[@class='widget-content']/form/input[2]"));
+		password.sendKeys("**********");
+		System.out.println("Password : Passed");
+		
+		driver.findElement(By.xpath("//button[@type='button']")).click();
+		System.out.println("Button Clicked : Passed");
+		
+	}
+	}
+
+
