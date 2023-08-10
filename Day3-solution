@@ -1,26 +1,31 @@
 package notDefaultPackage;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class Assignment_3 
-{
+public class WebAuto {
+	
+	
+	
+	
+	
+	
+		static WebDriver driver;
 
-	static WebDriver driver;
-		
-		public static void main(String[] args) throws InterruptedException
-		
-		{
-		
-			WebDriverManager.chromedriver().setup();
+		public static void main(String[] args) throws InterruptedException {
+			
+WebDriverManager.chromedriver().setup();
 			
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("--remote-allow-origins=*");
@@ -73,7 +78,7 @@ public class Assignment_3
 			System.out.println("Hello World : Passed");
 			
 			//Clicking on Button 2
-			WebElement EditBut = driver.findElement(By.id("but2"));
+			WebElement EditBut = driver.findElement(By.xpath("//button[contains(text(),'Button2')]"));
 			EditBut.click();
 			System.out.println("Button 2 is Editable");
 			
@@ -82,15 +87,52 @@ public class Assignment_3
 			
 			
 			//ClickAfterTextDisappears Alert Handled
-			WebElement Alert_2 = driver.findElement(By.id("alert2"));
+			WebElement Alert_2 = driver.findElement(By.xpath("//*[@value='ClickAfterTextDissappears']"));
 			Alert_2.click();
 			System.out.println(driver.switchTo().alert().getText());
-			Thread.sleep(1000);
+			Thread.sleep(2000);
+			driver.switchTo().alert().accept();
+			
+			WebElement Submit = driver.findElement(By.xpath("//button[text()='Submit']"));
+			Submit.click();
+			System.out.println("Submit Button : Clicked");
+			WebElement Login = driver.findElement(By.xpath("//button[text()='Login']"));
+			Login.click();
+			System.out.println("Login Button : Clicked");
+			WebElement Register = driver.findElement(By.xpath("//button[text()='Register']"));
+			Register.click();
+			System.out.println("Register Button : Clicked");
+		
+			//Current Window Handle 
+			
+			String currentwindow = driver.getWindowHandle();
+			
+			//Click on pop up view 
+			WebElement pop = driver.findElement(By.partialLinkText("pop"));
+			pop.click();
+			Set <String> windowhandles = driver.getWindowHandles();
+			ArrayList <String> win = new ArrayList <String> (windowhandles);
+			String popwindow = win.get(1);
+			driver.switchTo().window(popwindow);
+			System.out.println(driver.findElement(By.xpath("//h2")).getText());
+		
+			//pop up Window to default window 
+			driver.switchTo().window(currentwindow);
+			
+			//Click Try it Button
+			driver.findElement(By.xpath("//button[text()='Try it']")).click();
+			System.out.println("Try it : Clicked");
+			
+			//Double Click Button
+			WebElement DB = driver.findElement(By.xpath("//button[@ondblclick='dblclickAlert()']"));
+			Actions act = new Actions (driver);
+			act.doubleClick(DB).perform();
+			System.out.println(DB.getText());
+			Thread.sleep(100);
 			driver.switchTo().alert().accept();
 			
 			
 			
 			
 		}
-
 }
