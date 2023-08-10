@@ -1,0 +1,96 @@
+package notDefaultPackage;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Assignment_3 
+{
+
+	static WebDriver driver;
+		
+		public static void main(String[] args) throws InterruptedException
+		
+		{
+		
+			WebDriverManager.chromedriver().setup();
+			
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--remote-allow-origins=*");
+			driver = new ChromeDriver(options);
+			
+			driver.get("https://omayo.blogspot.com");
+			
+			String UN = "OsamaBinNadeem";
+			String PWD = "++++";
+			String url = driver.getCurrentUrl();
+			
+			
+			if (url.equals("https://omayo.blogspot.com/"))
+			{
+				System.out.println("URL: Passed");
+			}
+			else
+			{
+				System.out.println("URL: Failed");
+			}
+			
+			
+			
+			
+			
+			//Reading Data from the Table 
+			List <WebElement> listoftable = driver.findElements(By.xpath("//*[contains(@id,'table')]"));
+			
+			for (WebElement eachLink : listoftable)
+			{
+				System.out.println(eachLink.getText());
+			}
+			
+			//Selecting from the List
+			Select list = new Select(driver.findElement(By.xpath("//select[contains(@id,'multiselect')]")));
+			list.selectByValue("Hyundaix");
+			System.out.println("Hyundai : Selected");
+			
+			//Selecting from the drop down menu
+			Select dropdown = new Select(driver.findElement(By.xpath("//select[contains(@id,'drop')]")));
+			dropdown.selectByValue("jkl");
+			System.out.println("doc 3 : Selected");
+			
+			//Text Deleted 
+			WebElement T = driver.findElement(By.xpath("//input[@value='Selenium WebDriver']"));
+			T.clear();
+			System.out.println("Text Selenium WebDriver : Deleted");
+			//Text Entered
+			T.sendKeys("Hello World");
+			System.out.println("Hello World : Passed");
+			
+			//Clicking on Button 2
+			WebElement EditBut = driver.findElement(By.id("but2"));
+			EditBut.click();
+			System.out.println("Button 2 is Editable");
+			
+			//Click on three buttons
+			
+			
+			
+			//ClickAfterTextDisappears Alert Handled
+			WebElement Alert_2 = driver.findElement(By.id("alert2"));
+			Alert_2.click();
+			System.out.println(driver.switchTo().alert().getText());
+			Thread.sleep(1000);
+			driver.switchTo().alert().accept();
+			
+			
+			
+			
+		}
+
+}
