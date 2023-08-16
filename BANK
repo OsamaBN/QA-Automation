@@ -1,11 +1,8 @@
 package notDefaultPackage;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,10 +13,17 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import java.io.File;
+import java.io.IOException;
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.TakesScreenshot;
 
 public class Testing_01 {
 
 	static WebDriver driver;
+	static Logger logger = LogManager.getLogger(Logger_Assignment.class);
 	
 	@Test
 	public void OpenWebsite()
@@ -30,6 +34,8 @@ public class Testing_01 {
 			options.addArguments("--remote-allow-origins=*");
 			driver = new ChromeDriver(options);
 			
+			//OPENING THE WEBSITE
+			
 			driver.get("https://www.globalsqa.com/angularJs-protractor/BankingProject");
 
 	}
@@ -37,7 +43,7 @@ public class Testing_01 {
 	@Test(priority = 1)
 	public void BankManagerLogin()
 	{
-		
+		//CLICKING ON THE Bank Manager Login BUTTON
 		WebDriverWait wait =  new WebDriverWait(driver,Duration.ofSeconds(5));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Bank Manager Login']")));
 		driver.findElement(By.xpath("//button[text()='Bank Manager Login']")).click();
@@ -56,17 +62,28 @@ public class Testing_01 {
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder = 'First Name']")));
 		String Fname = "Osama";
 		String Lname = "Bin Nadeem";
+		
 		//ENTER FIRST NAME
+		
 		driver.findElement(By.xpath("//input[@placeholder = 'First Name']")).sendKeys(Fname);
+		
 		//ENTER LAST NAME
+		
 		WebElement lname = driver.findElement(By.xpath("//input[@placeholder = 'Last Name']"));
 		lname.sendKeys(Lname);
+		
 		//ENTER POST CODE
+		
 		WebElement post = driver.findElement(By.xpath("//input[@placeholder = 'Post Code']"));
 		post.sendKeys("54000");
-	//ACCEPT THE ALERT
+		
+	    //ADD THE CUSTOMER
+		
 		WebElement Addcs = driver.findElement(By.xpath("//button[@type = 'submit']"));
 		Addcs.click();
+		
+		//ACCEPT THE ALERT
+		
 		driver.switchTo().alert().accept();
 	}
 	
@@ -74,25 +91,35 @@ public class Testing_01 {
 	public void OpenAccount()
 	{
 		WebDriverWait wait1 =  new WebDriverWait(driver,Duration.ofSeconds(10));
+		
 		//OPEN ACCOUNT
+		
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-class= 'btnClass2']")));
 		WebElement openacct = driver.findElement(By.xpath("//button[@ng-class= 'btnClass2']"));
 		openacct.click();
+		
 		//WAIT 
+		
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id= 'userSelect']")));
-		//SELECT CUSTOMER
+		
+		//SELECT CUSTOMER FROM DROPDOWN
+		
 		driver.findElement(By.xpath("//select[@id= 'userSelect']")).click();
 		Select CustName = new Select (driver.findElement(By.xpath("//select[@id= 'userSelect']")));
 		CustName.selectByVisibleText("Osama Bin Nadeem");
-		// SELECT CURRENCY 
+		
+		// SELECT CURRENCY FROM DROPDOWN
+		
 		driver.findElement(By.xpath("//select[@id= 'currency']")).click();
 		Select Curr = new Select (driver.findElement(By.xpath("//select[@id= 'currency']")));
 		Curr.selectByVisibleText("Rupee");
 		
-        //CLICK PROCESS
+        //CLICK PROCESS BUTTON
+		
 		driver.findElement(By.xpath("//button[@type= 'submit']")).click();
 		
 		//ACCEPT THE ALERT
+		
 		System.out.println(driver.switchTo().alert().getText());
 		driver.switchTo().alert().accept();
 		
@@ -106,13 +133,21 @@ public class Testing_01 {
 		driver.navigate().back();
 		driver.navigate().back();
 		driver.navigate().back();
+		
 		WebDriverWait wait1 =  new WebDriverWait(driver,Duration.ofSeconds(10));
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click= 'customer()']")));
+		
 		//CLICK CUSTOMER LOGIN 
+		
 		driver.findElement(By.xpath("//button[@ng-click= 'customer()']")).click();
+		
 		//WAIT
+		
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id= 'userSelect']")));
 		driver.findElement(By.xpath("//select[@id= 'userSelect']")).click();
+		
+		//SELECT Osama Bin Nadeem FROM DROPDOWN
+		
 		Select cust =  new Select(	driver.findElement(By.xpath("//select[@id= 'userSelect']"))); 
 		cust.selectByVisibleText("Osama Bin Nadeem");
 		
@@ -126,14 +161,20 @@ public class Testing_01 {
 		WebDriverWait wait1 =  new WebDriverWait(driver,Duration.ofSeconds(10));
 		
 		//CLICK DEPOSIT
+		
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-class= 'btnClass2']")));
 		driver.findElement(By.xpath("//button[@ng-class= 'btnClass2']")).click();
+		
 		// WAIT
 		
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='amount']")));
-		// ENTER AMOUNT 
+		
+	    // ENTER AMOUNT 
+		
 		driver.findElement(By.xpath("//input[@placeholder='amount']")).sendKeys("6000");
-	// CLICK DEPOSIT
+		
+	   // CLICK DEPOSIT
+		
 		driver.findElement(By.xpath("	//button[text()='Deposit']")).click();
 		
 		
@@ -148,23 +189,32 @@ public class Testing_01 {
 		WebDriverWait wait2 =  new WebDriverWait(driver,Duration.ofSeconds(40));
 		
 		//CLICK DEPOSIT
+		
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-class='btnClass3']")));
 		driver.findElement(By.xpath("//button[@ng-class='btnClass3']")).click();
+		
 		// WAIT
+		
 		Thread.sleep(2000);
 		wait2.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='amount']")));
+		
 		// ENTER AMOUNT 
+		
 		driver.findElement(By.xpath("//input[@placeholder='amount']")).sendKeys("2000");
-	// CLICK DEPOSIT
+		
+	   // CLICK DEPOSIT
+		
 		driver.findElement(By.xpath("//button[text()='Withdraw']")).click();
 		
 		
 	}
 	
 	@Test(priority = 7)
-	public void Transcation_List() throws InterruptedException
+	public void Transcation_Button() throws InterruptedException
 	{
 		WebDriverWait wait1 =  new WebDriverWait(driver,Duration.ofSeconds(10));
+		
+		//CLICK ON THE Transaction list
 		
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-class='btnClass1']")));
 		Thread.sleep(3000);
@@ -174,9 +224,15 @@ public class Testing_01 {
 	}
 	
 	@Test(priority=8)
-	public void Get_List() throws InterruptedException
+	public void Get_List() throws InterruptedException, IOException
 	{
 		Thread.sleep(3000);
+		//TAKE SCREENSHOT OF TRANSACTIONS
+		
+		 File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+	     FileUtils.copyFile(screenshot,new File("C:\\Users\\osama\\OneDrive\\Pictures\\Screenshots\\Transaction.jpg"));
+	     //logger.debug("ScreenShot Taken");
+	     
 		List <WebElement> listoftable = driver.findElements(By.xpath("//table[@class='table table-bordered table-striped']"));
 		
 		for (WebElement eachLink : listoftable)
@@ -192,14 +248,53 @@ public class Testing_01 {
 	@Test(priority=9)
 	public void Home()
 	{
+		//GOTO HOME
 		driver.findElement(By.xpath("//button[@class='btn home']")).click();
 		WebDriverWait wait =  new WebDriverWait(driver,Duration.ofSeconds(5));
+		
+		// CLICK ON Bank Manager Login BUTTON
+		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Bank Manager Login']")));
 		driver.findElement(By.xpath("//button[text()='Bank Manager Login']")).click();
+		
+		//GOTO CUSTOMERS
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-class='btnClass3']")));
 		driver.findElement(By.xpath("//button[@ng-class='btnClass3']")).click();
 		
+	}
+	
+	@Test (priority= 10)
+	public void DeleteCustomer() 
+	{
+		WebDriverWait wait1 =  new WebDriverWait(driver,Duration.ofSeconds(10));
+		
+		// SEARCH FOR Osama
+		
+		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Search Customer']")));
+		driver.findElement(By.xpath("//input[@placeholder='Search Customer']")).sendKeys("Osama");
+		
+		//CLICK ON Delete BUTTON
+		
+		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Delete']")));
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driver.findElement(By.xpath("//button[text()='Delete']")).click();
+		
+		//GOTO HOME AGAIN
+		
+		try {
+			
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driver.findElement(By.xpath("//button[@class='btn home']")).click();
 	}
 	
 	
